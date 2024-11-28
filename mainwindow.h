@@ -9,10 +9,6 @@
 #include <QTextEdit>
 #include <QLineEdit>
 #include <QHBoxLayout>
-#include <QScrollBar>
-#include <QFont>
-#include <QPalette>
-#include <QGraphicsDropShadowEffect>
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -23,15 +19,11 @@ public:
 
 private slots:
     void sendMessage();
-    void adjustScrollBar();
 
 private:
-    void setupStyles();
-    
     QTextEdit *chatDisplay;
     QLineEdit *messageInput;
     QPushButton *sendButton;
-    QWidget *inputContainer;
 };
 
 #endif // MAINWINDOW_H
