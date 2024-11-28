@@ -14,14 +14,17 @@ find_package(nlohmann_json REQUIRED)
 set(SOURCES
     src/main.cpp
     src/gui/mainwindow.cpp
-    src/api/api_client.h
     src/api/openai_client.cpp
+    src/api/api_client.cpp
+    src/utils/config.cpp
 )
 
 # Header files
 set(HEADERS
     src/gui/mainwindow.h
+    src/api/api_client.h
     src/api/openai_client.h
+    src/utils/config.h
 )
 
 # Create executable
@@ -40,7 +43,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     Qt6::Core
     Qt6::Widgets
     CURL::libcurl
-    spdlog::spdlog
+    spdlog::spdlog_header_only
     nlohmann_json::nlohmann_json
 )
 
