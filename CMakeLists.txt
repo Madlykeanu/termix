@@ -1,12 +1,32 @@
 cmake_minimum_required(VERSION 3.16)
+
+# Set vcpkg configuration
+set(VCPKG_TARGET_TRIPLET "x64-mingw-static" CACHE STRING "Vcpkg target triplet")
+set(CMAKE_TOOLCHAIN_FILE "C:/Users/ksorc/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "Vcpkg toolchain file")
+
 project(termix VERSION 1.0.0 LANGUAGES CXX)
+
+# Set MinGW paths
+set(CMAKE_C_COMPILER "C:/Qt/Tools/mingw1310_64/bin/gcc.exe")
+set(CMAKE_CXX_COMPILER "C:/Qt/Tools/mingw1310_64/bin/g++.exe")
+set(CMAKE_MAKE_PROGRAM "C:/Qt/Tools/mingw1310_64/bin/mingw32-make.exe")
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# Set Qt path for MinGW
+set(CMAKE_PREFIX_PATH "C:/Qt/6.8.0/mingw_64")
+
+# Add vcpkg installed path to prefix path
+list(APPEND CMAKE_PREFIX_PATH "C:/Users/ksorc/vcpkg/installed/x64-mingw-static")
+
+# Debug output
+message(STATUS "CMAKE_PREFIX_PATH: ${CMAKE_PREFIX_PATH}")
+message(STATUS "Looking for CURL in: ${CMAKE_PREFIX_PATH}")
+
 # Find required packages
 find_package(Qt6 REQUIRED COMPONENTS Core Widgets)
-find_package(CURL REQUIRED)
+find_package(CURL CONFIG REQUIRED)
 find_package(spdlog REQUIRED)
 find_package(nlohmann_json REQUIRED)
 

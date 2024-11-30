@@ -1,0 +1,46 @@
+the idea is for this to be an agentic terminal interface that can execute
+console commands to interact with and move around the computer,
+
+the idea is that this will be very useful for people who may not have the 
+knowledge to use the terminal.
+
+
+the agent should be able to execute commands(either with approval or autonomously maybe with a command blacklist so it cant destroy your computer)
+
+Project Structure:
+
+src/
+  ├── main.cpp              # Application entry point
+  ├── gui/
+  │   ├── mainwindow.h      # Main window header
+  │   └── mainwindow.cpp    # Main window implementation
+  ├── api/
+  │   ├── api_client.h      # Base API client interface
+  │   ├── api_client.cpp    # Base API client implementation
+  │   ├── openai_client.h   # OpenAI specific client
+  │   └── openai_client.cpp # OpenAI implementation
+  └── utils/
+      ├── config.h          # Configuration management
+      └── config.cpp        # Configuration implementation
+
+Dependencies:
+- Qt6 (GUI framework)
+- libcurl (HTTP requests)
+- nlohmann-json (JSON parsing)
+- spdlog (Logging)
+
+Build System:
+- CMake
+
+Project Features:
+1. GUI Terminal Interface
+2. API Key Configuration
+3. OpenAI API Integration
+4. File System Navigation
+5. Command Execution
+6. Extensible API Client Design for Future Models
+
+step 1. create a basic chat interface(done)
+step 2. basic openai api calls and directory structure(the plan is to support local models aswell).
+we will create an api cpp file that will handle all of the api calls and will at first only have openai but eventually will handle api calls to other models and especially local models.
+step 3.
