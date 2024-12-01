@@ -23,6 +23,9 @@ public:
     bool loadFromFile(const std::string& filepath);
     bool saveToFile(const std::string& filepath) const;
 
+    // Get config directory
+    static std::string getConfigDir();
+
 private:
     Config() = default;
     ~Config() = default;

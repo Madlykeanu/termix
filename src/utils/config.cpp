@@ -2,6 +2,7 @@
 #include <fstream>
 #include <nlohmann/json.hpp>
 #include <spdlog/spdlog.h>
+#include <filesystem>
 
 namespace termix {
 namespace utils {
@@ -29,11 +30,31 @@ std::string Config::getValue(const std::string& key) const {
     return (it != settings.end()) ? it->second : "";
 }
 
+std::string Config::getConfigDir() {
+    std::filesystem::path configPath;
+#ifdef _WIN32
+    const char* appData = std::getenv("APPDATA");
+    if (appData) {
+        configPath = std::filesystem::path(appData) / "Termix";
+    }
+#else
+    const char* home = std::getenv("HOME");
+    if (home) {
+        configPath = std::filesystem::path(home) / ".config" / "termix";
+    }
+#endif
+
+    // Create directory if it doesn't exist
+    std::filesystem::create_directories(configPath);
+    return configPath.string();
+}
+
 bool Config::loadFromFile(const std::string& filepath) {
     try {
-        std::ifstream file(filepath);
+        auto configPath = std::filesystem::path(getConfigDir()) / filepath;
+        std::ifstream file(configPath);
         if (!file.is_open()) {
-            spdlog::error("Failed to open config file: {}", filepath);
+            spdlog::error("Failed to open config file: {}", configPath.string());
             return false;
         }
 
@@ -65,15 +86,16 @@ bool Config::loadFromFile(const std::string& filepath) {
 
 bool Config::saveToFile(const std::string& filepath) const {
     try {
+        auto configPath = std::filesystem::path(getConfigDir()) / filepath;
+        std::ofstream file(configPath);
+        if (!file.is_open()) {
+            spdlog::error("Failed to open config file for writing: {}", configPath.string());
+            return false;
+        }
+
         nlohmann::json j;
         j["api_keys"] = apiKeys;
         j["settings"] = settings;
-
-        std::ofstream file(filepath);
-        if (!file.is_open()) {
-            spdlog::error("Failed to open config file for writing: {}", filepath);
-            return false;
-        }
 
         file << j.dump(4);
         return true;
