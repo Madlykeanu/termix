@@ -43,7 +43,7 @@ void MainWindow::setupUi() {
     mainLayout->addLayout(inputLayout);
 
     // Set window properties
-    resize(800, 600);
+    resize(400, 600);
     setWindowTitle("Termix - Natural Language Terminal Interface");
 }
 
